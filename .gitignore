@@ -1,0 +1,8 @@
+model_weights.h5
+/resnet50_breakhis_weights.weights.h5
+/model_weights.h5
+/resnet50_breakhis_weights.weights.h5
+*.weights.h5
+node_modules/
+__pycache__/
+venv/
