@@ -4,7 +4,8 @@ A deep learning web application that classifies breast cancer histopathological 
 
 
 ## Preview
-![image](https://github.com/user-attachments/assets/2643ba6d-a483-44c9-ba4c-c2e937c1494b)
+![image](https://github.com/user-attachments/assets/c45271d8-1075-4884-97eb-84413a59ba5e)
+
 
 
 ## Tech Stack
