@@ -12,16 +12,13 @@ import seaborn as sns
 from tqdm import tqdm
 import sys
 
-# Path to your extracted BreakHis dataset
 dataset_path = '/home/jayesh/work/BreaKHis_v1'
 
-# Set seeds for reproducibility
 os.environ['PYTHONHASHSEED'] = '0'
 random.seed(0)
 np.random.seed(0)
 tf.random.set_seed(1)
 
-# Define image size
 IMG_SIZE = 224
 
 # Recreate the model architecture
@@ -36,7 +33,6 @@ def create_model():
     model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
     return model
 
-# Create model and load weights
 print("Creating model and loading weights...")
 model = create_model()
 try:
@@ -46,7 +42,6 @@ except Exception as e:
     print(f"Error loading weights: {e}")
     print("Using default ImageNet weights.")
 
-# Function to find all image paths and labels
 def get_all_image_paths_and_labels(dataset_path):
     benign_subtypes = ['adenosis', 'fibroadenoma', 'phyllodes_tumor', 'tubular_adenoma']
     malignant_subtypes = ['ductal_carcinoma', 'lobular_carcinoma', 'mucinous_carcinoma', 'papillary_carcinoma']
@@ -54,14 +49,12 @@ def get_all_image_paths_and_labels(dataset_path):
     benign_base = os.path.join(dataset_path, 'histology_slides', 'breast', 'benign', 'SOB')
     malignant_base = os.path.join(dataset_path, 'histology_slides', 'breast', 'malignant', 'SOB')
     
-    # Check if "malignant" is spelled as "malign" in the dataset
     if not os.path.exists(malignant_base):
         malignant_base = os.path.join(dataset_path, 'histology_slides', 'breast', 'malign', 'SOB')
 
     image_paths = []
     labels = []
 
-    # Collect benign images
     for subtype in benign_subtypes:
         subtype_path = os.path.join(benign_base, subtype)
         if not os.path.exists(subtype_path):
@@ -79,7 +72,6 @@ def get_all_image_paths_and_labels(dataset_path):
                         image_paths.append(os.path.join(mag_path, img_file))
                         labels.append(0)  # benign
 
-    # Collect malignant images
     for subtype in malignant_subtypes:
         subtype_path = os.path.join(malignant_base, subtype)
         if not os.path.exists(subtype_path):
@@ -98,8 +90,7 @@ def get_all_image_paths_and_labels(dataset_path):
                         labels.append(1)  # malignant
 
     return image_paths, labels
-
-# Process images in batches
+    
 def process_images_batch(image_paths, batch_size=32):
     predictions = []
     
@@ -119,7 +110,6 @@ def process_images_batch(image_paths, batch_size=32):
     
     return predictions
 
-# Main evaluation function
 def evaluate_sample(dataset_path, sample_size=100):
     print(f"Collecting image paths and labels from {dataset_path}...")
     all_image_paths, all_labels = get_all_image_paths_and_labels(dataset_path)
@@ -137,23 +127,22 @@ def evaluate_sample(dataset_path, sample_size=100):
     sampled_image_paths = [all_image_paths[i] for i in sampled_indices]
     sampled_labels = [all_labels[i] for i in sampled_indices]
     
-    # Get class distribution in sample
+    # class distribution in sample
     benign_count = sampled_labels.count(0)
     malignant_count = sampled_labels.count(1)
     print(f"Sample distribution: {benign_count} benign, {malignant_count} malignant")
     
-    # Get predictions
+    
     print("Making predictions...")
     prediction_scores = process_images_batch(sampled_image_paths)
     predicted_labels = [1 if score > 0.5 else 0 for score in prediction_scores]
     
     return np.array(sampled_labels), np.array(predicted_labels), sampled_image_paths, np.array(prediction_scores)
 
-# Run evaluation on sample
+
 print("Starting evaluation on sample...")
 true_labels, predicted_labels, image_paths, prediction_scores = evaluate_sample(dataset_path, sample_size=100)
 
-# Calculate metrics
 print("Calculating metrics...")
 accuracy = accuracy_score(true_labels, predicted_labels)
 precision = precision_score(true_labels, predicted_labels)
@@ -161,7 +150,6 @@ recall = recall_score(true_labels, predicted_labels)
 f1 = f1_score(true_labels, predicted_labels)
 conf_matrix = confusion_matrix(true_labels, predicted_labels)
 
-# Print results
 print("\n===== Model Performance on Sample =====")
 print(f"Sample size: {len(true_labels)} images")
 print(f"Accuracy: {accuracy:.4f}")
