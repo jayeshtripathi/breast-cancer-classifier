@@ -88,7 +88,7 @@ function App() {
         
         <div className="model-info">
           <h3>About the Model</h3>
-          <p>This classifier uses a pre-trained ResNet50 convolutional neural network to analyze histopathological images of breast tissue and determine whether they show benign or malignant characteristics. The model was trained on the BreakHis dataset containing 7,909 microscopic images of breast tumor tissue.</p>
+          <p>This classifier uses a fine-tuned ResNet50 convolutional neural network to analyze histopathological images of breast tissue and determine whether they show benign or malignant characteristics. The model was trained on the BreakHis dataset containing 7,909 microscopic images of breast tumor tissue.</p>
         </div>
         
         {(file || result || error) && (
