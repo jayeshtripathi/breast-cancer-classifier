@@ -2,7 +2,10 @@
 
 A deep learning web application that classifies breast cancer histopathological images as benign or malignant using a fine-tuned ResNet50 model. This project leverages transfer learning on the BreakHis dataset to provide accurate classification of microscopic breast tissue images.
 
-Preview![image](https://github.com/user-attachments/assets/1276c42d-d021-41b7-b4ff-8adab8d64b58)
+
+## Preview
+![image](https://github.com/user-attachments/assets/2643ba6d-a483-44c9-ba4c-c2e937c1494b)
+
 
 ## Tech Stack
 
@@ -12,7 +15,7 @@ Preview![image](https://github.com/user-attachments/assets/1276c42d-d021-41b7-b4
 
 ## Getting Started
 
-These instructions will help you set up and run the project on your local machine for development and testing purposes.
+Follow these instructions to set up and run the project on your local machine.
 
 ### Prerequisites
 
@@ -24,20 +27,20 @@ These instructions will help you set up and run the project on your local machin
 
 1. **Clone the repository**
 ```bash
-git clone https://github.com/yourusername/breast-cancer-classifier.git
+git clone https://github.com/jayeshtripathi/breast-cancer-classifier.git
 cd breast-cancer-classifier
 ```
 
 2. **Set up the backend**
 ```bash
-# Create and activate a virtual environment (optional but recommended)
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+# Create and activate a virtual environment
+python -m venv env_name
+source env_name/bin/activate
 
-# Install Python dependencies
+# Install python dependencies
 pip install -r requirements.txt
 
-# Download the model files (if not included in the repository)
+# Obtain resnet50_breakhis_model.json and resnet50_breakhis_weights.weights.h5 by executing the cells in finetune_resnet50.ipynb. This was done with Kaggle notebook, but the same can be executed in local machine by downloading the BreakHis dataset locally.
 # Place resnet50_breakhis_model.json and resnet50_breakhis_weights.weights.h5 in the root directory
 ```
 
@@ -81,21 +84,3 @@ The classifier uses a ResNet50 convolutional neural network fine-tuned on the Br
 
 The [BreakHis dataset](https://web.inf.ufpr.br/vri/databases/breast-cancer-histopathological-database-breakhis/) contains 7,909 microscopic images of breast tumor tissue collected from 82 patients using different magnification factors (40X, 100X, 200X, and 400X).
 
-## Project Structure
-
-```
-breast-cancer-classifier/
-├── app.py                              # Flask backend server
-├── requirements.txt                    # Python dependencies
-├── resnet50_breakhis_model.json        # Model architecture
-├── resnet50_breakhis_weights.weights.h5 # Model weights
-├── frontend/                           # React frontend
-│   ├── public/
-│   ├── src/
-│   │   ├── App.js                      # Main React component
-│   │   ├── App.css                     # Styling
-│   │   └── ...
-│   ├── package.json
-│   └── ...
-└── README.md
-```
